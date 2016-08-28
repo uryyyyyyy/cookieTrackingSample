@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>cookie sample code</title>
+</head>
+<body>
+<div id="app">cookie sample</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+$.ajax({
+    type: "POST",
+    url: "http://localhost:8080/pre_flight",
+    data: "key=value",
+    success: function(msg){
+        console.log( "Data Saved: " + msg );
+    }
+});
+</script>
+</body>
+</html>
