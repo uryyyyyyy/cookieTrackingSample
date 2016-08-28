@@ -23,3 +23,11 @@
 - localhostのトラッキングピクセルを読むときにSet-Cookieが送られる。
 - 次回以降のアクセスの時にCookieが送られる。
 - サーバーは受け取ったら標準出力で内容を確認する。
+
+## pre flight
+
+- `http://uryyyyyyy.shake-freek.com/cookieTrackingSample/static/ajax_pre_flight.html`にアクセス
+- htmlのajaxの中で外部ドメインへのapplication/jsonのリクエストを出しているので、pre flightが走る
+- サーバ側でOPTIONSメソッドに対して対象ドメインを許可する。
+- pre flightが通ったので、改めてリクエストを投げる
+- 処理されて文字列が返ってくるので、それをajaxのcallbackで処理する。
