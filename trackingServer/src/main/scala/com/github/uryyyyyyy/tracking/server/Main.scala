@@ -42,13 +42,16 @@ object Main {
             getFromResource("tracking.png")
           }
         }
-      }
-    } ~ get {
-      path("tracking") {
+      } ~ path("tracking") {
         parameter('trackingID) { trackingID =>
           println("1st party cookie" + trackingID)
           getFromResource("tracking.png")
         }
+      }
+    } ~ post {
+      path("pre_flight") {
+        println("1st party cookie")
+        complete("request done")
       }
     }
 
