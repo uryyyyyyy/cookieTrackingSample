@@ -25,13 +25,9 @@ object Main {
         complete("ok")
       }
     } ~ get {
-      path("3rd_party_tracking.html") {
-        getFromResource("3rd_party_tracking.html")
-      } ~ path("1st_party_tracking.html") {
-        getFromResource("1st_party_tracking.html")
-      } ~ path("1stPartyTracking.js") {
+      path("1stPartyTracking.js") {
         getFromResource("1stPartyTracking.js")
-      }~ path("3rdPartyTracking.img") {
+      } ~ path("3rdPartyTracking.img") {
         optionalCookie("3rdPartyTrackingKey"){ pair =>
           val trackingID = if (pair.isEmpty){
             val id = random.nextDouble().toString
