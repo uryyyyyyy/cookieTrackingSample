@@ -8,6 +8,6 @@ if(!trackingID){
     trackingID = randomNumber;
 }
 
-var url = "http://192.168.11.2:8080/tracking?trackingID=" + trackingID;
+var url = "http://localhost:8080/tracking?trackingID=" + trackingID;
 
 $("body").append('<img src=' + url + '>');
