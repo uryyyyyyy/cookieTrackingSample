@@ -2,7 +2,8 @@ package com.github.uryyyyyyy.tracking.server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.headers.HttpCookie
+import akka.http.scaladsl.model.HttpHeader
+import akka.http.scaladsl.model.headers.{HttpCookie, HttpOrigin, HttpOriginRange}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 
@@ -48,9 +49,17 @@ object Main {
           getFromResource("tracking.png")
         }
       }
+    } ~ options {
+      path("pre_flight") {
+        println("pre flight request")
+        val header: HttpHeader = akka.http.scaladsl.model.headers.`Access-Control-Allow-Origin`(HttpOriginRange.`*`)
+        respondWithHeader(header){
+          complete("request done")
+        }
+      }
     } ~ post {
       path("pre_flight") {
-        println("1st party cookie")
+        println("main request")
         complete("request done")
       }
     }
