@@ -2,14 +2,14 @@ package com.github.uryyyyyyy.tracking.server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpHeader
-import akka.http.scaladsl.model.headers.{HttpCookie, HttpOrigin, HttpOriginRange}
+import akka.http.scaladsl.model.headers
+import akka.http.scaladsl.model.headers.CacheDirectives.`no-store`
+import akka.http.scaladsl.model.headers.{HttpCookie, HttpOrigin, `Cache-Control`}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 
 import scala.concurrent.Future
 import scala.util.Random
-import akka.http.scaladsl.model.headers
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -41,7 +41,9 @@ object Main {
             id
           }
           setCookie(HttpCookie("3rdPartyTrackingKey", trackingID)){
-            getFromResource("tracking.png")
+            respondWithHeader(`Cache-Control`(`no-store`)){
+              getFromResource("tracking.png")
+            }
           }
         }
       } ~ path("tracking") {
@@ -53,9 +55,8 @@ object Main {
     } ~ options {
       path("pre_flight") {
         println("pre flight request")
-        val origin = HttpOrigin("http://uryyyyyyy.shake-freek.com")
-        val header = headers.`Access-Control-Allow-Origin`(origin)
-        val header2 = headers.`Access-Control-Allow-Headers`("Content-Type")
+        val header = headers.`Access-Control-Allow-Origin`(HttpOrigin("https://opt-tech.github.io"))
+        val header2 = headers.`Access-Control-Allow-Headers`("Content-Type", "X-Requested-With")
         respondWithHeaders(header, header2){
           complete("request done")
         }
@@ -63,9 +64,8 @@ object Main {
     } ~ post {
       path("pre_flight") {
         println("main request")
-        val origin = HttpOrigin("http://uryyyyyyy.shake-freek.com")
-        val header = headers.`Access-Control-Allow-Origin`(origin)
-        val header2 = headers.`Access-Control-Allow-Headers`("Content-Type")
+        val header = headers.`Access-Control-Allow-Origin`(HttpOrigin("https://opt-tech.github.io"))
+        val header2 = headers.`Access-Control-Allow-Headers`("Content-Type", "X-Requested-With")
         respondWithHeaders(header, header2){
           complete("request done")
         }
