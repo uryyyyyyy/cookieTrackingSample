@@ -55,8 +55,7 @@ object Main {
     } ~ options {
       path("pre_flight") {
         println("pre flight request")
-        val origin = HttpOrigin("http://localhost:63342")
-        val header = headers.`Access-Control-Allow-Origin`(origin)
+        val header = headers.`Access-Control-Allow-Origin`(HttpOrigin("https://opt-tech.github.io"))
         val header2 = headers.`Access-Control-Allow-Headers`("Content-Type", "X-Requested-With")
         respondWithHeaders(header, header2){
           complete("request done")
@@ -65,8 +64,7 @@ object Main {
     } ~ post {
       path("pre_flight") {
         println("main request")
-        val origin = HttpOrigin("http://localhost:63342")
-        val header = headers.`Access-Control-Allow-Origin`(origin)
+        val header = headers.`Access-Control-Allow-Origin`(HttpOrigin("https://opt-tech.github.io"))
         val header2 = headers.`Access-Control-Allow-Headers`("Content-Type", "X-Requested-With")
         respondWithHeaders(header, header2){
           complete("request done")
